@@ -71,7 +71,7 @@ subexpression which have exactly the `args` that you look for (order does not ma
 For example,
 
 ```python
-result = Query(args=(x, 1))
+result = Query(args=(x, 1)).run(expr)
 ```
 
 will return all subexpressions with `args==(x, 1)` or `args==(1, x)`.
@@ -79,7 +79,7 @@ will return all subexpressions with `args==(x, 1)` or `args==(1, x)`.
 If you don't want to specify all `args`, use `args__contains` instead:
 
 ```python
-result = Query(args__contains=(x,))
+result = Query(args__contains=(x,)).run(expr)
 ```
 
 will return all subexpression with `args` attribute containing `x`.
@@ -90,7 +90,7 @@ You can define your own predicates to query for. For instance, to
 query for subexpressions with exactly three arguments, you could write
 
 ```python
-query = Query(test=lambd e: (not e.is_Atom) and len(e.args) == 3)
+query = Query(test=lambd e: (not e.is_Atom) and len(e.args) == 3).run(expr)
 ```
 
 #### Chaining queries
