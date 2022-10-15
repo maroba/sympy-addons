@@ -79,7 +79,7 @@ will return all subexpressions with `args==(x, 1)` or `args==(1, x)`.
 If you don't want to specify all `args`, use `args__contains` instead:
 
 ```python
-result = Query(args_contains=(x,))
+result = Query(args__contains=(x,))
 ```
 
 will return all subexpression with `args` attribute containing `x`.
