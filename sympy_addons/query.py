@@ -404,5 +404,10 @@ def get_epath(subexpr, containing_expr):
     return paths[0]
 
 
+def get_level(expr, level):
+    ...
+    # TODO
+
+
 def _searchable_latex_str(latex_repr):
     return latex_repr.replace(' ', '').replace(r'\left', '').replace(r'\right', '')
