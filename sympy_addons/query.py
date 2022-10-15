@@ -38,15 +38,15 @@ class Query:
                     return False
                 return all(arg in e.args for arg in args) and len(args) == len(e.args)
             self.tests.append(test_args)
-        elif 'args__contain' in kwargs:
-            args = kwargs['args__contain']
+        elif 'args__contains' in kwargs:
+            args = kwargs['args__contains']
             if not isinstance(args, tuple) and not isinstance(args, list):
                 args = tuple(args)
-            def test_args__contain(e):
+            def test_args__contains(e):
                 if e.is_Atom: # atoms have no args
                     return False
                 return all(arg in e.args for arg in args)
-            self.tests.append(test_args__contain)
+            self.tests.append(test_args__contains)
         elif 'expr' in kwargs:
             self.tests.append(
                 lambda e: e == kwargs['expr']
@@ -87,7 +87,7 @@ class Query:
             'isinstance',  # tests if type is same or child class
             'expr',  # tests if the subexpr exactly matches
             'args',  # tests if args exactly match
-            'args__contain',  # tests if args contain all of the given tuple items
+            'args__contains',  # tests if args contain all of the given tuple items
             'test',  # user-defined matching test
             'initial_tests',  # give initial set of test functions (for internal-use only)
         ]

@@ -59,7 +59,7 @@ def test_query_run():
     assert result.first() == x + 2
 
     # Query by partial args
-    query = Query(args__contain=(-1,))
+    query = Query(args__contains=(-1,))
     result = query.run(expr)
     assert len(result) == 2
     assert result.first() == x - 1
@@ -87,20 +87,20 @@ def test_concatenate_queries_with_or():
 def test_filter_query_results():
     expr = (x - 1) ** 2 + (x + 2) ** 2 / sqrt((x - 1) ** 2 + (x + 3) ** 2)
 
-    query_1 = Query(args__contain=(x,))
+    query_1 = Query(args__contains=(x,))
     result = query_1.run(expr)
 
     assert len(result) > 1
     for res in result:
         assert x in res.args
 
-    query_2 = Query(args__contain=(x, 2))
+    query_2 = Query(args__contains=(x, 2))
     result = result.filter(query_2)
 
     assert len(result) == 1
     assert result.first() == x + 2
 
-    query_3 = Query(args__contain=(y,))
+    query_3 = Query(args__contains=(y,))
     result = query_1.run(expr).filter(query_2).filter(query_3)
     assert len(result) == 0
 

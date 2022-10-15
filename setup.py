@@ -9,7 +9,7 @@ description = 'Useful tools for working with SymPy'
 name = 'sympy_addons'
 year = '2022'
 url = 'https://github.com/maroba/sympy-addons'
-version = '0.0.1'
+version = '0.0.2'
 
 setup(
     name='sympy-addons',
