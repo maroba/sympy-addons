@@ -43,22 +43,10 @@ class Query:
 
         """
 
-        self._validate_kwargs(kwargs)
+        self._validate_keywords(kwargs)
         self.kwargs = kwargs
 
         self.tests = []
-
-        if 'initial_tests' in kwargs:
-            tests = kwargs['initial_tests']
-            try:
-                iter(tests)
-                for t in tests:
-                    if not callable(t):
-                        raise ValueError
-            except:
-                raise ValueError('initial_tests must be an iterable of callables.')
-            self.tests = tests
-            return
 
         if 'type' in kwargs:
             self.tests.append(lambda e: type(e) == kwargs['type'])
@@ -93,6 +81,17 @@ class Query:
             if not callable(test):
                 raise TypeError('{} is not callable.'.format(repr(test)))
             self.tests.append(test)
+        elif 'tests' in kwargs:
+            tests = kwargs['tests']
+            err_msg = 'tests must be an iterable of callables.'
+            try:
+                iter(tests)
+                for t in tests:
+                    if not callable(t):
+                        raise ValueError(err_msg)
+            except:
+                raise ValueError(err_msg)
+            self.tests = tests
         else:
             raise AssertionError('This should not happen.')
 
@@ -114,12 +113,12 @@ class Query:
         """Returns a query that matches is self-query matches OR other query matches."""
         assert type(other) == Query
         tests = self.tests + other.tests
-        return Query(initial_tests=tests)
+        return Query(tests=tests)
 
     def __repr__(self):
         return str(self.kwargs)
 
-    def _validate_kwargs(self, kwargs):
+    def _validate_keywords(self, kwargs):
         allowed_keywords = [
             'type',  # tests if type are exactly equal
             'isinstance',  # tests if type is same or child class
@@ -127,7 +126,7 @@ class Query:
             'args',  # tests if args exactly match
             'args__contains',  # tests if args contain all of the given tuple items
             'test',  # user-defined matching test
-            'initial_tests',  # give initial set of test functions (for internal-use only)
+            'tests',  # give initial set of test functions
         ]
         num_keywords_found = 0
         for key in kwargs:
