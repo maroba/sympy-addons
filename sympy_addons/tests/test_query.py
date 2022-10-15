@@ -1,5 +1,5 @@
 import pytest
-from sympy import epath, sqrt, Pow, Atom, Integer, sin
+from sympy import epath, sqrt, Pow, Atom, Integer, sin, Add, expand
 from sympy.abc import x, y, z
 
 from sympy_addons.query import get_epaths, get_epath, NotUniqueException, NotFoundException, Query
@@ -71,6 +71,26 @@ def test_query_run():
     assert len(result) == 1
     assert result.first() == (x + 2) ** 2 + (x - 4) ** 3 + sin(z)
 
+    # Query for latex matches
+    query = Query(latex=r'(x+3)^{2}')
+    result = query.run(expr)
+    assert len(result) == 1
+    assert result.first() == (x + 3) ** 2
+
+    # Query for latex contains
+    query = Query(latex__contains=r'\sin')
+    result = query.run(expr)
+    assert len(result) == 4
+
+
+def test_query_negate():
+    expr = (x - 1) ** 2 + (x + 2) ** 2 / sqrt((x - 1) ** 2 + (x + 3) ** 2)
+
+    result = Query(expr=x - 1, negate=True).run(expr)
+    assert len(result) > 0
+    for item in result:
+        assert item != x - 1
+
 
 def test_concatenate_queries_with_or():
     expr = (x - 1) ** 2 + (x + 2) ** 2 / sqrt((x - 1) ** 2 + (x + 3) ** 2)
@@ -107,3 +127,15 @@ def test_filter_query_results():
     # Check if one can iterate over empty result set; shouldn't raise exception
     for _ in result:
         pass
+
+
+def test_select_and_work_on_subexpr():
+    expr = (x - 1) ** 2 + (x + 2) ** 2 / sqrt((x - 1) ** 2 + (x + 3) ** 2)
+
+    # goal is to expand the (x-1)**2 under the square root only
+
+    path = get_epaths((x-1)**2, expr)  # returns ['/[0]', '/[1]/[1]/[0]/[0]']
+    result = epath(path[1], expr, expand)
+
+    assert result == (x - 1) ** 2 + (x + 2) ** 2 / sqrt(expand((x - 1) ** 2) + (x + 3) ** 2)
+
