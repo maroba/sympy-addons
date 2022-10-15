@@ -5,6 +5,43 @@ class Query:
     """A class for querying SymPy expression."""
 
     def __init__(self, **kwargs):
+        """Public Constructor for Query instance.
+
+        Parameters
+        ----------
+        kwargs : keyword arguments
+            Specifies what query to perform.
+
+            Allowed keys:
+
+                'type'
+                    Value can be any type.
+                    Returns all subexpressions with given type.
+
+                'isinstance'
+                    Value can be any type.
+                    Returns all subexpressions with a type that is inheriting from given type.
+
+                'expr'
+                    Value can be any SymPy expression or symbol.
+                    Returns all subexpressions exactly equal to given value.
+
+                'args'
+                    Value must be a tuple of SymPy objects.
+                    Returns all subexpressions with args attribute matching the value.
+                    The order of the value-tuple does not matter.
+
+                'args__contains'
+                    Value must be a tuple of SymPy objects.
+                    Returns all subexpression with args attribute containing all of the objects
+                    in the given value tuple.
+
+                'test'
+                    Value must be a callable, only argument is the expression to test, body is a
+                    predicate on the expression to test.
+                    Returns all subexpressions matching the given predicate.
+
+        """
 
         self._validate_kwargs(kwargs)
         self.kwargs = kwargs
@@ -74,6 +111,7 @@ class Query:
         return False
 
     def __or__(self, other):
+        """Returns a query that matches is self-query matches OR other query matches."""
         assert type(other) == Query
         tests = self.tests + other.tests
         return Query(initial_tests=tests)
