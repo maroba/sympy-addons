@@ -12,7 +12,7 @@ class Query:
         kwargs : keyword arguments
             Specifies what query to perform.
 
-            Allowed keys:
+            Allowed keys (only ONE at a time is allowed):
 
                 'type'
                     Value can be any type.
