@@ -8,7 +8,7 @@ email = 'matthias.r.baer@googlemail.com'
 description = 'Useful tools for working with SymPy'
 name = 'sympy_addons'
 year = '2022'
-url = ''
+url = 'https://github.com/maroba/sympy-addons'
 version = '0.0.1'
 
 setup(
@@ -24,8 +24,7 @@ setup(
     description=description,
     long_description=open('README.md').read() if exists('README.md') else '',
     long_description_content_type="text/markdown",
-    install_requires=['sphinx',
-                      ],
+    install_requires=['sympy', 'networkx'],
     python_requires=">=3.6",
     classifiers=['Operating System :: OS Independent',
                  'Programming Language :: Python :: 3',
