@@ -1,8 +1,16 @@
 # sympy-addons
 
-Useful tools for working with SymPy.
-
+[![PyPI version](https://badge.fury.io/py/sympy-addons.svg)](https://badge.fury.io/py/sympy-addons)
 [![Documentation Status](https://readthedocs.org/projects/sympy-addons/badge/?version=latest)](https://sympy-addons.readthedocs.io/en/latest/?badge=latest)
+
+
+Useful tools for working with [SymPy](https://www.sympy.org/en/index.html).
+
+Main features:
+
+- tools for working on subexpressions including a convenient query API
+- graph visualization of expression trees
+- tools for vector analysis
 
 
 ## Installation
@@ -10,6 +18,10 @@ Useful tools for working with SymPy.
 ```
 pip install --upgrade sympy-addons
 ```
+
+## Documentation
+
+For a full documentation of the project, see [this website](https://sympy-addons.readthedocs.io/en/latest/). 
 
 ## Usage
 
@@ -146,3 +158,15 @@ epath(paths[1], expr, expand)
 
 The `get_path` function works just as the `get_paths` function, but it will raise
 an exception if the expression is not found or not unique.
+
+
+## Running the Tests
+
+Run the tests with `pytest`:
+
+```
+# if you haven't installed pytest yet:
+pip install pytest 
+
+pytest sympy_addons
+```
