@@ -2,6 +2,9 @@
 
 Useful tools for working with SymPy.
 
+[![Documentation Status](https://readthedocs.org/projects/sympy-addons/badge/?version=latest)](https://sympy-addons.readthedocs.io/en/latest/?badge=latest)
+
+
 ## Installation
 
 ```
