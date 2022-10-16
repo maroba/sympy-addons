@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
+import re
 from os.path import exists
 from setuptools import setup, find_packages
 
@@ -10,8 +12,18 @@ package_name = 'sympy_addons'
 pypi_name = 'sympy-addons'
 year = '2022'
 url = 'https://github.com/maroba/sympy-addons'
-version = '0.0.3'
 
+
+def get_version():
+    with open(os.path.join('sympy_addons', '__init__.py'), 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            match = re.match(' *__version__ *= *\'([^\']+)\'', line)
+            if match:
+                return match.group(1)
+
+
+version = get_version()
 
 setup(
     name=pypi_name,

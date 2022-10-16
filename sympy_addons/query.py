@@ -159,6 +159,7 @@ class Predicate:
             return 'not {}'.format(type(self).__name__)
         return type(self).__name__
 
+
 class IsType(Predicate):
 
     def __init__(self, the_type, negate=False):
@@ -405,8 +406,8 @@ def get_epath(subexpr, containing_expr):
 
 
 def get_level(expr, level):
-    ...
-    # TODO
+    # TODO, as helper for sympy.use
+    raise NotImplementedError
 
 
 def _searchable_latex_str(latex_repr):
