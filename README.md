@@ -159,6 +159,29 @@ epath(paths[1], expr, expand)
 The `get_path` function works just as the `get_paths` function, but it will raise
 an exception if the expression is not found or not unique.
 
+### Adding rewrite rules
+
+SymPy's rewrite function allows to replace expressions in terms of 
+mathematically equivalent expressions based on certain rules. If you want
+to add rewrite rules, this is easy to do with the given addon. For example,
+to add a rule for the addition theorem of the sine function:
+
+```python
+from sympy import sin, cos
+from sympy.abc import x
+from sympy_addons import customize_rewrite
+
+# This activates the customization facilities for rewriting rules:
+customize_rewrite(sin)
+
+# Now you can add a rewrite rule:
+sin.rewrite_manager.add_rule('half-angle', lambda x: 2 * sin(x / 2) * cos(x / 2))
+
+# Use the new rule:
+expr = sin(2*x)
+expr.rewrite('half-angle')  # returns 2*sin(x)*cos(x)
+```
+
 
 ## Running the Tests
 
