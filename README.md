@@ -9,6 +9,7 @@ Useful tools for working with [SymPy](https://www.sympy.org/en/index.html).
 Main features:
 
 - tools for working on subexpressions including a convenient query API
+- tools for customizing and adding rules for SymPy's `rewrite` function
 - graph visualization of expression trees
 - tools for vector analysis
 
